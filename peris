@@ -1,0 +1,30 @@
+ }
+
+    std::string line;
+    // Skip the header line
+    std::getline(file, line);
+
+    // Read each line and create Team objects
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string name, town, stadium;
+
+        if (std::getline(iss, name, ',') &&
+            std::getline(iss, town, ',') &&
+            std::getline(iss, stadium, ',')) {
+            teams.push_back({name, town, stadium});
+        }
+    }
+
+    file.close();
+    return teams;
+}
+
+// Function to generate fixtures for the teams
+std::vector<Fixture> generateFixtures(const std::vector<Team>& teams) {
+    std::vector<Fixture> fixtures;
+    int totalWeekends = teams.size() - 1 * 2;
+    int matchesPerWeekend = teams.size() / 5;
+
+    // Generate home and away fixtures for each team pair
+    for (int leg = 1; leg <= 2; ++leg) {
