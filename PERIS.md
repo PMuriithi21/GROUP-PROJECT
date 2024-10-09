@@ -1,3 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <random>
+#include <fstream>
+#include <string>
+#include <sstream>
+using namespace std;
+
+// Define structures for Team and Fixture
+struct Team {
+    string name;
+    string town;
+    string stadium;
+};
+
+struct Fixture {
+    Team homeTeam;
+    Team awayTeam;
+    int leg;
+    int weekend;
+};
+// Function to read teams from a CSV file
+vector<Team> readTeamsFromCSV(const string& filename) {
+    vector<Team> teams;
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Error opening file: " << filename << endl;
+        return teams;
+    }
 
     string line;
     // Skip the header line
@@ -27,6 +57,14 @@ vector<Fixture> generateFixtures(const vector<Team>& teams) {
 
     // Generate home and away fixtures for each team pair
     for (int leg = 1; leg <= 2; ++leg) {
-        for (int i = 0; i < teams.size() - 1; ++i) 
-
+        for (int i = 0; i < teams.size() - 1; ++i) {
+            for (int j = i + 1; j < teams.size(); ++j) {
+                Fixture fixture;
+                fixture.homeTeam = (leg == 1) ? teams[i] : teams[j];
+                fixture.awayTeam = (leg == 1) ? teams[j] : teams[i];
+                fixture.leg = leg;
+                fixtures.push_back(fixture);
+            }
+        }
+    }
 
