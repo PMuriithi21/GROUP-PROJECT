@@ -20,3 +20,32 @@ struct Fixture {
     int leg;
     int weekend;
 };
+// Function to read teams from a CSV file
+vector<Team> readTeamsFromCSV(const string& filename) {
+    vector<Team> teams;
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Error opening file: " << filename << endl;
+        return teams;
+    }
+
+    string line;
+    // Skip the header line
+    getline(file, line);
+
+    // Read each line and create Team objects
+    while (getline(file, line)) {
+        istringstream iss(line);
+        string name, town, stadium;
+
+        if (getline(iss, name, ',') &&
+            getline(iss, town, ',') &&
+            getline(iss, stadium, ',')) {
+            teams.push_back({name, town, stadium});
+        }
+    }
+
+    file.close();
+    return teams;
+}
+
