@@ -1,1 +1,22 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <random>
+#include <fstream>
+#include <string>
+#include <sstream>
+using namespace std;
 
+// Define structures for Team and Fixture
+struct Team {
+    string name;
+    string town;
+    string stadium;
+};
+
+struct Fixture {
+    Team homeTeam;
+    Team awayTeam;
+    int leg;
+    int weekend;
+};
